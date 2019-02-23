@@ -44,3 +44,22 @@ $ catkin_make
 ```
 <p align="justify">
 You now have two new directories: build and devel. The aptly named build directory is the build space for C++ packages and, for the most part, you will not interact with it. The devel directory does contain something of interest, a file named setup.bash. This setup.bash script must be sourced before using the catkin workspace.  </p>
+
+
+### roslaunch
+
+roslaunch allows you to do the following
+
+- Launch ROS Master and multiple nodes with one simple command
+- Set default parameters on the parameter server
+- Automatically re-spawn processes that have died
+
+To use roslaunch, you must first make sure that your workspace has been built, and sourced.
+
+### rosdep
+
+ROS packages have two different types of dependencies: build dependencies, and run dependencies. The rosdep tool will check for a package's missing dependencies, download them, and install them. To check for missing dependencies in the simple_arm package:
+```
+$ rosdep check package_name
+```
+Note: In order for the command to work, the workspace must be sourced. This gives you a list of the system dependencies that are missing, and where to get them. To have rosdep install packages, invoke the following command from the root of the catkin workspace
