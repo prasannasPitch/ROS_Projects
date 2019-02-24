@@ -86,6 +86,7 @@ msg = serviceClassNameRequest()
 response = service_proxy(msg)
 ```
 
+## Creating ROS Services
 
-
+Interaction with a service consists of two messages being passed. A request passed to the service, and a response received from the service. The definitions of the request and response message type are contained within .srv files living in the srv directory under the package’s root.
 
