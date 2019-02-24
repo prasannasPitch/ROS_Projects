@@ -59,7 +59,33 @@ To use roslaunch, you must first make sure that your workspace has been built, a
 ### rosdep
 
 ROS packages have two different types of dependencies: build dependencies, and run dependencies. The rosdep tool will check for a package's missing dependencies, download them, and install them. To check for missing dependencies in the simple_arm package:
+
 ```
 $ rosdep check package_name
 ```
 Note: In order for the command to work, the workspace must be sourced. This gives you a list of the system dependencies that are missing, and where to get them. To have rosdep install packages, invoke the following command from the root of the catkin workspace
+
+
+
+## ROS Services
+<p align="justify">
+A ROS service allows request/response communication to exist between nodes. Within the node providing the service, request messages are handled by functions or methods. Once the requests have been handled successfully, the node providing the service sends a message back to the requester node. In Python, a ROS service can be created using the following definition format:
+</p>  
+
+```
+service = rospy.Service('service_name', serviceClassName, handler)
+```
+
+<p align="justify">
+On the other hand, to use a ROS service from within another node, you will define a ServiceProxy, which provides the interface for sending messages to the service: </p>  
+
+```
+service_proxy = rospy.ServiceProxy('service_name', serviceClassName)
+msg = serviceClassNameRequest()
+#update msg attributes here to have correct data
+response = service_proxy(msg)
+```
+
+
+
+
