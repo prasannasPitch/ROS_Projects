@@ -86,6 +86,15 @@ Once the publisher has been created as above, a message with the specified data 
 pub1.publish(message)
 ```
 
+## ROS Subscribers
+<p align="justify">
+A Subscriber enables your node to read messages from a topic, allowing useful data to be streamed into the node. In Python, ROS subscribers frequently have the following format, although other parameters and arguments are possible: </p>
+
+```
+sub1 = rospy.Subscriber("/topic_name", message_type, callback_function)
+```
+<p align="justify">
+The "/topic_name" indicates which topic the Subscriber should listen to.The message_type is the type of message being published on "/topic_name". The callback_function is the name of the function that should be called with each incoming message. Each time a message is received, it is passed as an argument to callback_function. Typically, this function is defined in your node to perform a useful action with the incoming data. Note that unlike service handler functions, the callback_function is not required to return anything. </p>
 
 
 ## ROS Services
