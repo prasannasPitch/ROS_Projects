@@ -1,4 +1,4 @@
-## ROS Projects
+## Robot Arm Mover Simulation With ROS
 
 
 ### Setting up CATKIN Workspace
@@ -46,25 +46,19 @@ $ catkin_make
 You now have two new directories: build and devel. The aptly named build directory is the build space for C++ packages and, for the most part, you will not interact with it. The devel directory does contain something of interest, a file named setup.bash. This setup.bash script must be sourced before using the catkin workspace.  </p>
 
 
-### roslaunch
+## ROS Nodes
+<p align="justify">
+ROS breaks complex steps into many small Unix processes called nodes. Typically each node on the system is responsible for one small and relatively specific portion of the robot's overall functionality. Here, in our simulation, three nodes are used to achieve safe operation of the robot.  </p>
 
-roslaunch allows you to do the following
+- simple_mover-publish joint angle to simple_arm
+- arm_mover-provides a service called safe_mode
+- safe_move-allows the arm to be moved to any position within its workspace. The safe zone is bounded my minimum and maximum joint angles, and is configurable via the ROS' parameter server
 
-- Launch ROS Master and multiple nodes with one simple command
-- Set default parameters on the parameter server
-- Automatically re-spawn processes that have died
+##  ROS Master Process
+<p align="justify">
+At the center of these collections of nodes is ROS Master Process which acts as a sort of manager of all the nodes. The ROS Master maintains a registry of all the active nodes on a system. It then allows each node to discover other nodes in the system and establish lines of communication with them. In addition to allowing nodes to locate one another and communicate, the ROS master also hosts what's called the parameter server. </p>
 
-To use roslaunch, you must first make sure that your workspace has been built, and sourced.
-
-### rosdep
-
-ROS packages have two different types of dependencies: build dependencies, and run dependencies. The rosdep tool will check for a package's missing dependencies, download them, and install them. To check for missing dependencies in the simple_arm package:
-
-```
-$ rosdep check package_name
-```
-Note: In order for the command to work, the workspace must be sourced. This gives you a list of the system dependencies that are missing, and where to get them. To have rosdep install packages, invoke the following command from the root of the catkin workspace
-
+![ros](https://user-images.githubusercontent.com/37708330/53758563-60305780-3ebe-11e9-962d-34ea8fce9850.png)
 
 
 ## ROS Publishers
@@ -74,6 +68,7 @@ Publishers allow a node to send messages to a topic, so that data from the node 
 ```
 pub1 = rospy.Publisher("/topic_name", message_type, queue_size=size)
 ```
+![publishers](https://user-images.githubusercontent.com/37708330/53758673-b1404b80-3ebe-11e9-93bb-2d64de41fc02.png)
 
 The "/topic_name" indicates which topic the publisher will be publishing to. The message_type is the type of message being published on "/topic_name".
 
@@ -116,14 +111,36 @@ msg = serviceClassNameRequest()
 response = service_proxy(msg)
 ```
 
-## Creating ROS Services
+### Creating ROS Services
 
 Interaction with a service consists of two messages being passed. A request passed to the service, and a response received from the service. The definitions of the request and response message type are contained within .srv files living in the srv directory under the package’s root.
 
 
-## roscd log
+## Some Essential ROS commands
+### roslaunch
 
-## rostopic echo /rosout
+roslaunch allows you to do the following
 
-## rospy.init_node('my_node', log_level=rospy.DEBUG)
+- Launch ROS Master and multiple nodes with one simple command
+- Set default parameters on the parameter server
+- Automatically re-spawn processes that have died
+
+To use roslaunch, you must first make sure that your workspace has been built, and sourced.
+
+### rosdep
+
+ROS packages have two different types of dependencies: build dependencies, and run dependencies. The rosdep tool will check for a package's missing dependencies, download them, and install them. To check for missing dependencies in the simple_arm package:
+
+```
+$ rosdep check package_name
+```
+Note: In order for the command to work, the workspace must be sourced. This gives you a list of the system dependencies that are missing, and where to get them. To have rosdep install packages, invoke the following command from the root of the catkin workspace
+
+
+
+###  roscd log
+
+###  rostopic echo /rosout
+
+###  rospy.init_node('my_node', log_level=rospy.DEBUG)
 
